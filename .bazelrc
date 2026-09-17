@@ -1,0 +1,7 @@
+build --compilation_mode=opt --copt -g
+
+build:gcc-default --repo_env=CC=gcc --repo_env=CXX=g++
+build:gcc-release --repo_env=CC=gcc --repo_env=CXX=g++ --copt=-O3
+
+build:clang-default --repo_env=CC=clang --repo_env=CXX=clang++
+build:clang-release --repo_env=CC=clang --repo_env=CXX=clang++ --copt=-O3
