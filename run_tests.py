@@ -3,6 +3,8 @@
 import subprocess
 from pathlib import Path
 import os
+import sys
+import shutil
 import json
 
 # Files
@@ -57,8 +59,15 @@ def render_table(title, table):
     print()
 
 # Bazel
+
+BAZEL_EXES = ['bazelisk', 'bazel']
+BAZEL_EXE = next(filter(lambda x: (shutil.which(x) is not None), BAZEL_EXES), None)
+if BAZEL_EXE is None:
+    print("BAZEL NOT FOUND IN PATH", file=sys.stderr)
+    exit(1)
+
 def bazel(*args):
-    subprocess.run(['bazel', *args], capture_output=True, check=True)
+    subprocess.run([BAZEL_EXE, *args], capture_output=True, check=True)
 
 for profile in profiles:
     bench_exe = build_bin / ("taolet-" + profile)
